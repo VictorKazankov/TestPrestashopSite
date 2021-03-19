@@ -1,0 +1,6 @@
+/tests/geckodriver.log
+/.idea/
+/venv/
+/geckodriver.log
+/report.html
+/assets/

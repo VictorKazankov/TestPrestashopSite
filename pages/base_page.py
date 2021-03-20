@@ -1,7 +1,4 @@
-from telnetlib import EC
-
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:

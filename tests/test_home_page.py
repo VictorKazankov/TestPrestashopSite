@@ -1,0 +1,3 @@
+def test_popular_products_currency_correspond_current_currency(home_page):
+    popular_product_prices_list = home_page.get_all_prices_for_popular_products()
+    home_page.all_product_prices_should_be_current_currency(popular_product_prices_list)

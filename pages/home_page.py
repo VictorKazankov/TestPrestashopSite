@@ -13,5 +13,4 @@ class HomePage(BasePage):
         # get currency icons for all popular product_objects and compare them with current currency icon
         currency_icons_list = list(map(lambda x: x.text[-1], popular_product_prices_list))
         for icon in currency_icons_list:
-            assert icon == current_currency_icon,\
-                "Product currency is not corresponded current currency"
+            assert icon == current_currency_icon

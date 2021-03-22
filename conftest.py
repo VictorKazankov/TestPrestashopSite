@@ -6,6 +6,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
 
 from pages.home_page import HomePage
+from pages.search_page import SearchPage
 
 
 def pytest_addoption(parser):
@@ -87,7 +88,7 @@ def change_browser(request):
     #                           desired_capabilities=capability)
     # else:
     #     raise ValueError("Unrecognized browser {}".format(browser_name))
-    return driver
+    # return driver
 
 
 @pytest.fixture(scope="function")
@@ -103,3 +104,10 @@ def home_page(browser):
     home_page = HomePage(browser, home_page_url)
     home_page.open()
     return home_page
+
+
+@pytest.fixture()
+def search_page(browser, home_page):
+    home_page.put_search_field_and_click()
+    search_page = SearchPage(browser, browser.current_url)
+    return search_page

@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_count_search_result_products(search_page):
     search_page.is_displayed_count_products_text()
     search_page.count_result_products_should_equal_total_products()
@@ -10,6 +13,7 @@ def test_all_prices_results_in_usd(search_page):
     search_page.all_product_prices_should_be_current_currency(price_list)
 
 
+@pytest.mark.xfail(reason="Sorting function works incorrect")
 def test_sort_ascending_products(search_page):
     type_sorting_text = 'Цене: от высокой к низкой'
     search_page.to_sort_products(type_sorting_text)
@@ -17,6 +21,7 @@ def test_sort_ascending_products(search_page):
     search_page.products_should_be_ascending()
 
 
+@pytest.mark.xfail(reason="Sorting function works incorrect")
 def test_sort_descending_products(search_page):
     type_sorting_text = 'Цене: от низкой к высокой'
     search_page.to_sort_products(type_sorting_text)

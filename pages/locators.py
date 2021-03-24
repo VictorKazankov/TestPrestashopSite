@@ -16,5 +16,11 @@ class HomePageLocators:
 class SearcPageLocators:
     SEARCH_RESULT = (By.XPATH, "//section[@id='main']/h2")
     SEARCH_RESULT_COUNT_PRODUCTS = (By.XPATH, "//div[@id='js-product-list-top']/div/p")
-    COUNT_ALL_PRODUCTS = (By.CSS_SELECTOR, "div[class='col-md-4']")
+    ALL_PRODUCTS = (By.CSS_SELECTOR, "div[class='col-md-4']")
     SEARCH_PRODUCT_PRICES = (By.CLASS_NAME, "price")
+    SELECT_SORT_DROPBOX = (By.CLASS_NAME, "select-title")
+    SELECT_SORT_LIST = (By.XPATH, "//div[@class='dropdown-menu']/a")
+    DISCOUNT_PRODUCTS = (By.CSS_SELECTOR, "div[class='products row'] [class='discount-percentage']")
+    DISCOUNT_PERCENTAGE_PRODUCT = [By.XPATH, "//span[@class='discount-percentage']"]
+    REGULAR_PRICE_PRODUCT = [By.XPATH, "//span[@class='discount-percentage']/preceding-sibling::*"]
+    DISCOUNT_PRICE_PRODUCT = [By.XPATH, "//span[@class='discount-percentage']/following-sibling::*"]

@@ -10,7 +10,7 @@ def test_usd_currency_displayed_in_popular_products(home_page):
     home_page.all_product_prices_should_be_current_currency(popular_product_prices_list)
 
 
-def test_go_to_search_page(home_page):
-    text = 'dress'
-    home_page.put_search_field_and_click(text)
+def test_move_to_search_page(home_page):
+    word = 'dress'
+    home_page.put_search_field_and_click(word)
     home_page.is_displayed_result_search_text()

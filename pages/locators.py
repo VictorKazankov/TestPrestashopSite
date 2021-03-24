@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class GeneralLocators:
-    CURRENCY_SELECTOR = (By.ID, "_desktop_currency_selector")
+    CURRENCY_SELECTOR = (By.XPATH, "//div[@id='_desktop_currency_selector']/*/*[2]")
     CURRENCY_DROPBOX = (By.XPATH, "//span[@class='expand-more _gray-darker hidden-sm-down']")
     DROPDOWN_CURRENCY_LIST = (By.XPATH, "//ul[@class='dropdown-menu hidden-sm-down']/li")
 

@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
@@ -9,7 +10,7 @@ from pages.search_page import SearchPage
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--language", action="store", default="ru")
 
 
@@ -27,72 +28,47 @@ def get_language_local_firefox(request):
     return fp
 
 
+capabilities = [
+    {
+        "browserName": "chrome",
+        "browserVersion": "89.0",
+        "config:options": {
+            "enableVNC": True,
+            "enableVideo": False,
+            "enableLog": True
+        }
+    },
+    {
+        "browserName": "firefox",
+        "browserVersion": "86.0",
+        "config:options": {
+            "enableVNC": True,
+            "enableVideo": False,
+            "enableLog": True
+        }
+    },
+    {
+        "browserName": "opera",
+        "browserVersion": "74.0",
+        "config:options": {
+            "enableVNC": True,
+            "enableVideo": False,
+            "enableLog": True
+        }
+    }
+]
+
+
 def change_browser(request):
-    browser_name = request.config.getoption("--browser")
-    if browser_name == "chrome":
-        br = webdriver.Chrome(ChromeDriverManager().install())
-    elif browser_name == "firefox":
-        br = webdriver.Firefox(executable_path=GeckoDriverManager().install())
-    else:
-        raise ValueError("Unrecognized browser {}".format(browser_name))
-    return br
-    # capabilities = {
-    #     "browserName": "chrome",
-    #     "browserVersion": "89.0",
-    #     "selenoid:options": {
-    #         "enableVNC": True,
-    #         "enableVideo": False
-    #     }
-    # }
-    #
-    # driver = webdriver.Remote(
-    #     command_executor="http://192.168.99.100:4444/wd/hub",
-    #     desired_capabilities=capabilities)
-
-    # browser_name = request.config.getoption("--browser")
-    #
-    # if browser_name == "chrome":
-    #     capability = {"browserName": "chrome",
-    #                   "browserVersion": "89.0",
-    #                   "selenoid:options": {
-    #                       "enableVNC": True,
-    #                       "enableVideo": True,
-    #                       "enableLog": True
-    #                   }
-    #                   }
-    #     br = webdriver.Remote(command_executor = "http://192.168.99.100:4444/wd/hub",
-    #                           desired_capabilities=capability,
-    #                           options=get_language_local_chrome(request))
-    # elif browser_name == "firefox":
-    #     capability = {"browserName": "firefox",
-    #                   "browserVersion": "86.0",
-    #                   "selenoid:options": {
-    #                       "enableVNC": True,
-    #                       "enableVideo": True,
-    #                       "enableLog": True
-    #                   }
-    #                   }
-    #     br = webdriver.Remote(command_executor = "http://192.168.99.100:4444/wd/hub",
-    #                           desired_capabilities=capability,
-    #                           browser_profile=get_language_local_firefox(request))
-    # elif browser_name == "opera":
-    #     capability = {"browserName": "opera",
-    #                   "browserVersion": "74.0",
-    #                   "selenoid:options": {
-    #                       "enableVNC": True,
-    #                       "enableVideo": True
-    #                   }
-    #                   }
-    #     br = webdriver.Remote(command_executor = "http://192.168.99.100:4444/wd/hub",
-    #                           desired_capabilities=capability)
-    # else:
-    #     raise ValueError("Unrecognized browser {}".format(browser_name))
-    # return driver
+    driver = webdriver.Remote(
+        command_executor="http://192.168.99.101:4444/wd/hub",
+        desired_capabilities=request)
+    return driver
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session", params=capabilities, ids=["chrome", "firefox", ""])
 def browser(request):
-    browser = change_browser(request)
+    browser = change_browser(request.param)
     yield browser
     browser.quit()
 
